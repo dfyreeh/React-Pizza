@@ -28,10 +28,10 @@ export default function Hom() {
         <div className="flex-1">
           <div className="flex flex-col gap-16">
             <ProductsGroupList
-              title="Піци"
+              title="Піца"
               items={[
                 {
-                  id: 1,
+                  id: 2,
                   name: "Маргарита",
 
                   imageUrl:
@@ -80,7 +80,7 @@ export default function Hom() {
               title="Сніданки"
               items={[
                 {
-                  id: 1,
+                  id: 2,
                   name: "Маргарита",
 
                   imageUrl:
@@ -123,7 +123,56 @@ export default function Hom() {
                   items: [{ price: 550 }],
                 },
               ]}
-              categoryId={1}
+              categoryId={2}
+            />
+            <ProductsGroupList
+              title="Комбо"
+              items={[
+                {
+                  id: 2,
+                  name: "Маргарита",
+
+                  imageUrl:
+                    "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
+                  items: [{ price: 550 }],
+                },
+                {
+                  id: 1,
+                  name: "Маргарита",
+                  imageUrl:
+                    "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
+                  items: [{ price: 550 }],
+                },
+                {
+                  id: 1,
+                  name: "Маргарита",
+                  imageUrl:
+                    "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
+                  items: [{ price: 550 }],
+                },
+                {
+                  id: 1,
+                  name: "Маргарита",
+                  imageUrl:
+                    "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
+                  items: [{ price: 550 }],
+                },
+                {
+                  id: 1,
+                  name: "Маргарита",
+                  imageUrl:
+                    "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
+                  items: [{ price: 550 }],
+                },
+                {
+                  id: 1,
+                  name: "Маргарита",
+                  imageUrl:
+                    "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
+                  items: [{ price: 550 }],
+                },
+              ]}
+              categoryId={3}
             />
           </div>
         </div>
