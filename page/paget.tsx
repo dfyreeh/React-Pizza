@@ -31,7 +31,7 @@ export default function Hom() {
               title="Піца"
               items={[
                 {
-                  id: 2,
+                  id: 1,
                   name: "Маргарита",
 
                   imageUrl:
@@ -39,35 +39,35 @@ export default function Hom() {
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 2,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 3,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 4,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 5,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 6,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
@@ -80,7 +80,7 @@ export default function Hom() {
               title="Сніданки"
               items={[
                 {
-                  id: 2,
+                  id: 7,
                   name: "Маргарита",
 
                   imageUrl:
@@ -88,35 +88,35 @@ export default function Hom() {
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 8,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 9,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 10,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 11,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 12,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
@@ -129,7 +129,7 @@ export default function Hom() {
               title="Комбо"
               items={[
                 {
-                  id: 2,
+                  id: 13,
                   name: "Маргарита",
 
                   imageUrl:
@@ -137,35 +137,35 @@ export default function Hom() {
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 14,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 15,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 16,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 17,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
                   items: [{ price: 550 }],
                 },
                 {
-                  id: 1,
+                  id: 18,
                   name: "Маргарита",
                   imageUrl:
                     "https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435723/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0_tzxmqu.png",
