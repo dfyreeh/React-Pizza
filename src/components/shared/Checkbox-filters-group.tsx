@@ -1,17 +1,20 @@
 import React from "react";
 import { FilterCheckbox, type FilterChecboxProps } from "./Filter-checkbox";
-import { Input } from "../ui";
+import { Input, Skeleton } from "../ui";
 import { cn } from "@/lib/utils";
 type Item = FilterChecboxProps;
 
 interface Props {
   title: string;
   items: Item[];
-  defultItem: Item[];
+  defultItem?: Item[];
   limit?: number;
+  loading?: boolean;
   searchInputPlaceholder?: string;
-  onChange?: (values: string[]) => void;
+  onClickCheckbox?: (id: string) => void;
   defaultValues?: string[];
+  selected?: Set<string>;
+  name?: string;
   className?: string;
 }
 
@@ -21,18 +24,37 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
   defultItem,
   limit = 5,
   searchInputPlaceholder = "Пошук...",
-  onChange,
+  loading = false,
+  onClickCheckbox,
   defaultValues,
+  selected,
+  name, 
   className,
+
 }) => {
   const [showAll, setShowAll] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
 
+  if (loading) {
+    return (
+      <div className={className}>
+        <p className="font-bold md-3">{title}</p>
+        {
+          ...Array(limit).fill(0).map((_, index) => (
+            <Skeleton key={index} className="h-5 mb-5 rounded-md" />
+          ))
+        }
+        <Skeleton className="h-5 w-1/2 rounded-md" />
+      </div>
+    );
+  }
+
   const list = showAll
     ? items.filter((item) =>
         item.text.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
+      
       )
-    : defultItem?.slice(0, limit);
+    : (defultItem || items).slice(0, limit);
 
   const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -58,12 +80,14 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
       >
         {list.map((item, index) => (
           <FilterCheckbox
-            onCheckedChange={(ids) => console.log(ids)}
-            checked={false}
+            onCheckedChange={() => onClickCheckbox?.(item.value)}
+            checked={selected?.has(item.value)}
             key={index}
             value={item.value}
             text={item.text}
+
             endAdornment={item.endAdornment}
+            name={name}
           />
         ))}
       </div>

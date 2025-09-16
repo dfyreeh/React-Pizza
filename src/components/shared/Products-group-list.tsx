@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useIntersection } from "react-use";
 import { Title } from "./Title";
 import { cn } from "@/lib/utils";
@@ -11,6 +11,7 @@ interface Props {
   listClassName?: string;
   categoryId?: number;
   className?: string;
+  scrollContainerRef?: React.RefObject<HTMLDivElement>; // реф на скролл-контейнер
 }
 
 export const ProductsGroupList: React.FC<Props> = ({
@@ -19,19 +20,30 @@ export const ProductsGroupList: React.FC<Props> = ({
   listClassName,
   categoryId,
   className,
+  scrollContainerRef,
 }) => {
-  const setActiveCategoryId = useCategoryStore(
-    (state: { setActiveId: any }) => state.setActiveId
-  );
-  const intersectionRef = React.useRef(null as any);
+  const setActiveCategoryId = useCategoryStore((state) => state.setActiveId);
+
+  const intersectionRef = useRef<HTMLDivElement>(null!);
+
   const intersection = useIntersection(intersectionRef, {
-    threshold: 0.4,
+    root: scrollContainerRef?.current || null, // если скролл в контейнере
+    threshold: 0.1,
   });
-  React.useEffect(() => {
+
+  useEffect(() => {
     if (intersection?.isIntersecting) {
       setActiveCategoryId(categoryId || 1);
+      console.log(
+        "Intersection",
+        title,
+        "visible?",
+        intersection.isIntersecting,
+        "catId",
+        categoryId
+      );
     }
-  }, [intersection, categoryId]);
+  }, [intersection?.isIntersecting, categoryId]);
 
   return (
     <div className={className} id={title} ref={intersectionRef}>
@@ -47,8 +59,13 @@ export const ProductsGroupList: React.FC<Props> = ({
             key={product.id}
             id={product.id}
             name={product.name}
+            description={product.description}
             imageUrl={product.imageUrl}
-            price={product.items[0].price}
+            price={
+              Array.isArray(product.price)
+                ? (Object.values(product.price[0])[0] as number) // <-- только число
+                : (product.price as number)
+            }
           />
         ))}
       </div>

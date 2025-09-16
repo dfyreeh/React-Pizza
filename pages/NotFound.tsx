@@ -1,6 +1,5 @@
 import { Container, Header } from "@/components/shared";
 import React from "react";
-import imgNotFound from "../src/assets/imgNotFound.jpg";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui";
@@ -13,9 +12,17 @@ export const NotFound: React.FC<Props> = ({ className }) => {
     <div className={className}>
       <Header />
       <Container className="flex flex-col gap-8 justify-center items-center min-h-[80vh]">
-        <img className="w-150 rounded-3xl mt-5" src={imgNotFound} alt="404" />
+        <h1 className="text-9xl">404</h1>
+        <p className="text-center text-lg">
+          Навіть Мертве море простіше оживити, ніж цю сторінку. <br /> — Джейсон
+          Стетхем
+        </p>
+
         <Link className="flex items-center gap-1" to="/">
-          <Button variant="outline" className="flex items-center gap-1 hover:bg-orange-500 hover:text-white">
+          <Button
+            variant="outline"
+            className="flex items-center gap-1 hover:bg-orange-500 hover:text-white"
+          >
             <ArrowLeft />
             На головну
           </Button>

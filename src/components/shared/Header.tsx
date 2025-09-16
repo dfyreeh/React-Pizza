@@ -28,14 +28,15 @@ export const Header: React.FC<Props> = ({ className }) => {
         </Link>
 
         <div className="mx-10 flex-1">
-          <SearchInput/> 
+          <SearchInput />
         </div>
 
         {/* Права частина */}
         <div className="flex items-center gap-3">
           <Button
             variant="outline"
-            className="flex items-center gap-1  hover:bg-orange-500 hover:text-white"
+            className="flex items-center gap-1  hover:bg-orange-500 hover:text-white "
+            
           >
             <User size={16} />
             Вхід

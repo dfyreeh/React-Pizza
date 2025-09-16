@@ -3,6 +3,7 @@ import { Search } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 import { fetchProducts } from "../../../services/axios";
+import { ReactTyped } from "react-typed";
 
 interface Props {
   className?: string;
@@ -86,14 +87,31 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
         )}
       >
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-        <input
-          className="rounded-2xl outline-none w-full bg-gray-200 pl-11"
-          type="text"
-          placeholder="Пошук..."
-          onFocus={() => setFocused(true)}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+        <ReactTyped
+          className="block w-full h-full"
+          strings={[
+            "Пеппероні",
+            "Креветки",
+            "Карамельний чізкейк",
+            "Соус сирний",
+            "Мінеральна вода негазована",
+            "Coca-Cola",
+            "Кокосовий латте",
+          ]}
+          typeSpeed={250}
+          backSpeed={100}
+          attr="placeholder"
+          loop
+        >
+          <input
+            className="rounded-2xl outline-none w-full h-full bg-gray-200 pl-11"
+            type="text"
+            onFocus={() => setFocused(true)}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </ReactTyped>
+
         <div
           className={cn(
             "absolute left-0 right-0 bg-white rounded-xl py-2 shadow-md transition-all duration-200 z-40 max-h-100 overflow-y-auto overflow-x-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
@@ -105,7 +123,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
           {filteredProducts.length > 0
             ? filteredProducts.map((product) => (
                 <Link
-                onClick={onClickItem}
+                  onClick={onClickItem}
                   key={product.id}
                   to={`/product/${product.id}`}
                   className="flex items-center gap-3 px-3 py-2 hover:bg-primary/10"
@@ -120,7 +138,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
                   <span>{product.name}</span>
                 </Link>
               ))
-            : "Нет результатов"}
+            : "Немає результатів"}
         </div>
       </div>
     </>

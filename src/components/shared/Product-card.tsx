@@ -10,7 +10,9 @@ interface Props {
   name: string;
   imageUrl: string;
   price: number;
+  description?: string;
   className?: string;
+
 }
 
 export const ProductCard: React.FC<Props> = ({
@@ -18,6 +20,7 @@ export const ProductCard: React.FC<Props> = ({
   name,
   imageUrl,
   price,
+  description,
   className,
 }) => {
   return (
@@ -32,7 +35,7 @@ export const ProductCard: React.FC<Props> = ({
         </div>
         <Title text={name} size="sm" className="mb-1 mt-3 font-bold" />
         <p className="text-sm text-gray-400">
-          томатний соус, моцарела, оливкова олія, орегано, базилік
+          {description ? description : "Смачна піца з улюбленими інгредієнтами"}
         </p>
         <div className="flex justify-between items-center mt-4">
           <span className="text-[20px]">
