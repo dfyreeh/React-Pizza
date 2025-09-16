@@ -1,8 +1,13 @@
 export { Header } from "./Header";
 export { Container } from "./Container";
-export { Title } from "./title";
+export { Title } from "./Title";
 export { Categories } from "./Categories";
 export { SortPopup } from "./Sort-popup";
 export { TopBar } from "./Top-bar";
 export { Filters } from "./Filters";
 export { FilterCheckbox } from "./Filter-checkbox";
+export { RangeSlider } from "./Range-slider";
+export { CheckboxFiltersGroup } from "./Checkbox-filters-group";
+export { ProductCard } from "./Product-card";
+export { ProductsGroupList } from "./Products-group-list";
+export { SearchInput } from "./Search-input";

@@ -13,6 +13,7 @@ export const SortPopup: React.FC<Props> = ({ className }) => {
         "inline-flex items-center gap-1 bg-gray-50 px-5 h-[52px] rounded-2xl cursor-pointer",
         className
       )}
+
     >
         
       <ArrowDownUp size={16} />
