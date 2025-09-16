@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import { Categories, Container, SortPopup } from "@/components/shared";
 
-
 interface Props {
   className?: string;
 }
@@ -15,10 +14,9 @@ export const TopBar: React.FC<Props> = ({ className }) => {
         className
       )}
     >
-      <Container className="flex items-center justify-between">
-
+      <Container className="flex justify-center items-center lg:justify-between lg:flex">
         <Categories />
-        <SortPopup />
+        <SortPopup className="hidden lg:flex" />
       </Container>
     </div>
   );
