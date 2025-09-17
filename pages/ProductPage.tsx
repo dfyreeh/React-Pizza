@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchGoods } from "../services/axios";
-import { Container, Header, ProductImage} from "../src/components/shared/index";
+import {
+  Container,
+  Header,
+  ProductImage,
+  Title,
+} from "../src/components/shared/index";
+
 
 interface Product {
   id: number;
@@ -87,14 +93,18 @@ export const ProductPage: React.FC = () => {
     loadProduct();
   }, [id, navigate]);
 
-//   if (loading) return <Container>Завантаження...</Container>;
+  //   if (loading) return <Container>Завантаження...</Container>;
 
   return (
     <>
       <Header />
       <Container>
-        <ProductImage imageUrl={product?.imageUrl} size={30}/>
-
+        <div className="flex flex-1">
+          <ProductImage imageUrl={product?.imageUrl} size={30} />
+          <div className="w-[490px] bg-[#FCFCFC] P-7">
+            <Title text={product?.name}/>
+          </div>
+        </div>
       </Container>
     </>
   );

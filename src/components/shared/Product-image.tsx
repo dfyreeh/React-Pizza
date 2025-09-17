@@ -4,12 +4,14 @@ import React from "react";
 interface Props {
   className?: string;
   imageUrl: string | undefined;
+ 
   size: number;
 }
 
 export const ProductImage: React.FC<Props> = ({
   className,
   imageUrl,
+ 
   size,
 }) => {
   return (
