@@ -26,10 +26,11 @@ export const ProductsGroupList: React.FC<Props> = ({
 
   const intersectionRef = useRef<HTMLDivElement>(null!);
 
-  const intersection = useIntersection(intersectionRef, {
-    root: scrollContainerRef?.current || null, // если скролл в контейнере
-    threshold: 0.1,
-  });
+const intersection = useIntersection(intersectionRef, {
+  root: null, // viewport
+  rootMargin: "0px 0px -50% 0px", // срабатывает, когда элемент пересекает верхнюю половину экрана
+  threshold: [0, 0.1, 0.25, 0.5, 0.75, 1], // срабатывает на любом пересечении
+});
 
   useEffect(() => {
     if (intersection?.isIntersecting) {

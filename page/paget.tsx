@@ -54,7 +54,7 @@ export default function Hom() {
       <Container className="flex pb-14">
         {/* Фільтрація */}
         <div className="flex gap-[60px] mr-12">
-          <div className="w-[250px]">
+          <div className="w-[250px] hidden xl:block">
             <Filters />
           </div>
         </div>
