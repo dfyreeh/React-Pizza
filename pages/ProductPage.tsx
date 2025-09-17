@@ -58,7 +58,7 @@ export const ProductPage: React.FC = () => {
   }, [id]);
 
   if (loading) return <Container>Загрузка...</Container>;
-  if (!product) return <Container>Продукт не найден</Container>;
+  if (!product) return <Container>Продукт не знайдено</Container>;
 
   return (
     <Container className="mt-5">
@@ -76,7 +76,7 @@ export const ProductPage: React.FC = () => {
           ))}
         </ul>
       )}
-      <p className="text-lg font-bold">Цена: {product.items[0].price}₴</p>
+      <p className="text-lg font-bold">Ціна: {product.items[0].price}₴</p>
     </Container>
   );
 };
