@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchGoods } from "../services/axios";
-import { Container, Header, ProductImage} from "../src/components/shared/index";
+import {
+  Container,
+  Header,
+  ProductImage,
+  Title,
+} from "../src/components/shared/index";
+
 
 interface Product {
   id: number;
@@ -87,26 +93,19 @@ export const ProductPage: React.FC = () => {
     loadProduct();
   }, [id, navigate]);
 
-  if (loading) return <Container>Загрузка...</Container>;
-  if (!product) return <Container>Продукт не найден</Container>;
+  //   if (loading) return <Container>Завантаження...</Container>;
 
   return (
-    <Container className="mt-5">
-      <Title text={product.name} size="xl" className="font-extrabold mb-4" />
-      <img
-        src={product.imageUrl}
-        alt={product.name}
-        className="w-full max-w-sm mb-4 rounded-lg"
-      />
-      <p className="mb-2">{product.description}</p>
-      {product.ingredients && product.ingredients.length > 0 && (
-        <ul className="mb-4 list-disc pl-5">
-          {product.ingredients.map((ing, index) => (
-            <li key={index}>{ing}</li>
-          ))}
-        </ul>
-      )}
-      <p className="text-lg font-bold">Цена: {product.items[0].price}₴</p>
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <div className="flex flex-1">
+          <ProductImage imageUrl={product?.imageUrl} size={30} />
+          <div className="w-[490px] bg-[#FCFCFC] P-7">
+            <Title text={product?.name}/>
+          </div>
+        </div>
+      </Container>
+    </>
   );
 };

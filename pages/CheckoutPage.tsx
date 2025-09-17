@@ -1,15 +1,21 @@
 // оформлення замовлення
 import React, { useState } from "react";
 import { CartItem } from "@/components/shared/CartItem";
-import { Header, Title } from "../src/components/shared/index";
+import { Container, Header, Title } from "../src/components/shared/index";
+import { Input } from "@/components/ui";
 
-
-
+interface CartItem {
+  id: number;
+  name: string;
+  description: string;
+  imageUrl: string;
+  prices: { label: string; value: string | number }[];
+}
 
 export const OrderProcessing: React.FC = () => {
   const [cart, setCart] = useState([
-    { id: 1, name: 'Чизбургер-пицца', price: 965, count: 2 },
-    { id: 2, name: 'Диабло', price: 1280, count: 1 },
+    { id: 1, imageUrl: '', name: 'Чизбургер-пицца', price: 965, count: 2 },
+    { id: 2, imageUrl: '', name: 'Диабло', price: 1280, count: 1 },
   ]);
 
   const handleChange = (id: number, delta: number) => {
@@ -19,59 +25,74 @@ export const OrderProcessing: React.FC = () => {
           ? { ...item, count: Math.max(1, item.count + delta) }
           : item
       )
-    );
-  };
+    )
+  }
+  const handleDelete = (id: number) => {
+    setCart(prev => prev.filter(item => item.id !== id));
+  }
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.count, 0);
-  const tax = 240;
-  const delivery = 120;
+  // const total = cart.reduce((sum, item) => sum + item.price * item.count, 0);
+  // const tax = 240;
+  // const delivery = 120;
 
-  return (
-   
-    
-    <div className=" bg-primary/15 min-h-screen bg- text-black p-8 flex justify-between gap-6">
-      <div className="flex-1 space-y-8">
-        <Title text="Оформлення заказу" size="md"></Title>
+ return ( 
+  <>
+  <Header />
+    <Container>
+      <div className=" min-h-screen mt-10 flex justify-between gap-6">
+        <div className="flex-1 space-y-8">
+          <Title text="Оформлення заказу" className="font-black" size="lg"/>
 
-        {/* Корзина */}
-        <section>
-          <div className=" bg- rounded-2xl p-5 w-3xl  ml-<120>">
-            <Title text="1. Корзина" size="sm" ></Title>
-            {cart.map(item => (
-              <CartItem
-                key={item.id}
-                name={item.name}
-                price={item.price}
-                count={item.count}
-                onIncrement={() => handleChange(item.id, 1)}
-                onDecrement={() => handleChange(item.id, -1)}
-              />
-            ))}
-          </div>
-        </section>
+          {/* Корзина */}
+          <section>
+            <div className="rounded-2xl shadow-sm p-6 w-2xl">
+              <Title text="1. Корзина" className="font-bold border-b my-2" size="sm" />
+              {cart.map(item => (
+                <CartItem
+                  key={item.id}
+                  imageUrl={item.imageUrl}
+                  name={item.name}
+                  price={item.price}
+                  count={item.count}
+                  onIncrement={() => handleChange(item.id, 1)}
+                  onDecrement={() => handleChange(item.id, -1)}
+                  onDelete={() => handleDelete(item.id)}
+                />
+              ))}
+             
+            </div>
+          </section>
 
-        {/* 2. Персональна інфа */}
-        <section>
-          <h2 className="font-semibold mb-3">2. Персональная информация</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <input className="border p-2 rounded" placeholder="Ваше имя" />
-            <input className="border p-2 rounded" placeholder="Email" />
-            <input className="border p-2 rounded" placeholder="Телефон" />
-          </div>
-        </section>
+          {/* 2. Персональна інфа */}
+          <section>
+            <div className="rounded-2xl shadow-sm p-6 w-2xl">
+              <Title text="2. Персональна інформація" className="font-bold border-b" size="sm" />
+              <div className="grid grid-cols-2 gap-4 mt-10">
+                <Input className="w-full " placeholder="Ім'я"/>
+                <Input className="w-full " placeholder="Прізвище"/>
+                <Input className="w-full" placeholder="Email"/>
+                <Input className="w-full " placeholder="Телефон"/>
+              </div>
+              
+            </div>
+          </section>
 
-        {/* 3. Адреса доставки */}
-        <section>
-          <h2 className="font-semibold mb-3">3. Адрес доставки</h2>
-          <input className="border p-2 rounded w-full mb-2" placeholder="Введите адрес" />
-          <textarea className="border p-2 rounded w-full" placeholder="Комментарий к заказу" />
-          <p className="text-sm mt-2 text-gray-500">⏰ Доставка в 11:00</p>
-        </section>
+          {/* 3. Адреса доставки */}
+          <section>
+            <div className="rounded-2xl shadow-sm p-6 w-2xl ">
+              <Title text="3. Адреса доставки" className="font-bold border-b" size="sm" />
+              <Input className="w-full mt-10" placeholder="Введи адресу"/>
+              <Input className="h-[150px] rounded-xl mt-5 border p-2 w-full resize-none  align-top" placeholder="Коментар до заказу..." />
+            </div>
+           
+          
+          </section>
+        </div>
+
+        {/* Підсумок */}
+        {/* <CartSummary total={total} tax={tax} delivery={delivery} /> */}
       </div>
-
-      {/* Підсумок */}
-      {/* <CartSummary total={total} tax={tax} delivery={delivery} /> */}
-    </div>
+    </Container></>
   );
 };
 

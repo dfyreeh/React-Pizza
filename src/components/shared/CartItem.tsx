@@ -1,5 +1,4 @@
 import React from "react";
-// import { Title } from "../src/components/shared/index";
 import { cn } from "@/lib/utils";
 
 
@@ -9,6 +8,7 @@ interface CartItemProps{
   count: number;
   onIncrement: () => void;
   onDecrement: () => void;
+  onDelete: () => void;
 }
 
 export const CartItem: React.FC<CartItemProps> = ({
@@ -17,9 +17,10 @@ export const CartItem: React.FC<CartItemProps> = ({
     count,
     onIncrement,
     onDecrement,
+    onDelete,
 }) => {
     return (
-        <div className={cn(" flex justify-between items-center border-b py-3")}>
+        <div className={cn(" flex justify-between items-center py-3")}>
             <div>
                 <p className="font-medium">{name}</p>
                 <p className="text-gray-500">{price} грн</p>
@@ -28,6 +29,8 @@ export const CartItem: React.FC<CartItemProps> = ({
                 <button onClick={onDecrement} className="px-2 py-1 bg-gray-200 rounded">-</button>
                 <span>{count}</span>
                 <button onClick={onIncrement} className="px-2 py-1 bg-gray-200 rounded">+</button>
+                <button onClick={onDelete} className="px-2 py-1 bg-gray-200 rounded">×</button>
+
             </div>
         </div>
     )
