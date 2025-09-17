@@ -2,11 +2,10 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import { useCategoryStore } from "../../../store/category";
 
+
 interface Props {
   className?: string;
 }
-
-// 1
 
 const cats = [
   {
@@ -34,6 +33,7 @@ const cats = [
     name: "Кава",
   },
 ];
+
 export const Categories: React.FC<Props> = ({ className }) => {
   const categoryActiveId = useCategoryStore((state) => state.activeId);
   return (
