@@ -29,7 +29,10 @@ export const ChooseProductForm: React.FC<Props> = ({
 
   return (
     <div
-      className={cn("flex flex-col lg:flex-row flex-1 gap-6 px-6", className)}
+      className={cn(
+        "flex flex-col bg-[#e0e0e0] rounded-3xl lg:flex-row flex-1 gap-6 ",
+        className
+      )}
     >
       <div className="flex items-center justify-center flex-1">
         <img
