@@ -52,7 +52,7 @@ export const OrderProcessing: React.FC = () => {
               {cart.map(item => (
                 <CartItem
                   key={item.id}
-                  imageUrl="https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435733/%D0%9A%D1%80%D0%B5%D0%B2%D0%B5%D1%82%D0%BA%D0%B8_eery8m.png"
+                  // imageUrl="https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435733/%D0%9A%D1%80%D0%B5%D0%B2%D0%B5%D1%82%D0%BA%D0%B8_eery8m.png"
                   name={item.name}
                   price={item.price}
                   count={item.count}
