@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchGoods } from "../services/axios";
 import {
+  ChoosePizzaForm,
+  ChooseProductForm,
   Container,
   Header,
-  ProductImage,
-  Title,
 } from "../src/components/shared/index";
 
+type PizzaSize = 25 | 30 | 35;
 
 interface Product {
   id: number;
@@ -17,13 +18,15 @@ interface Product {
   prices: { label: string; value: string | number }[];
   ingredients?: string[];
   measurements?: { label: string; value: string }[];
+  category: string;
 }
 
 export const ProductPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate(); // <-- используем navigate
+  const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedSize, setSelectedSize] = useState<PizzaSize>(25);
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -37,7 +40,6 @@ export const ProductPage: React.FC = () => {
           return;
         }
 
-        // --- Формуємо масив цін ---
         let prices: { label: string; value: string | number }[] = [];
         if (Array.isArray(found.price)) {
           found.price.forEach((pObj: any) => {
@@ -49,7 +51,6 @@ export const ProductPage: React.FC = () => {
           prices.push({ label: "Ціна", value: found.price });
         }
 
-        // --- Формуємо масив вимірювань (вага або об’єм) ---
         let measurements: { label: string; value: string }[] = [];
         const isDrink = ["coffee", "water", "cocktails"].includes(
           found.category
@@ -81,6 +82,7 @@ export const ProductPage: React.FC = () => {
           prices,
           ingredients: found.ingredients || [],
           measurements,
+          category: found.category,
         });
       } catch (error) {
         console.error("Помилка при завантаженні продукту:", error);
@@ -93,17 +95,35 @@ export const ProductPage: React.FC = () => {
     loadProduct();
   }, [id, navigate]);
 
-  //   if (loading) return <Container>Завантаження...</Container>;
+  const isPizzaForm = Boolean(product?.category === "pizza");
 
   return (
     <>
       <Header />
       <Container>
-        <div className="flex flex-1">
-          <ProductImage imageUrl={product?.imageUrl} size={30} />
-          <div className="w-[490px] bg-[#FCFCFC] P-7">
-            <Title text={product?.name}/>
-          </div>
+        <div className="flex justify-center flex-1">
+          {isPizzaForm && product ? (
+            <ChoosePizzaForm
+              className="mt-11"
+              imageUrl={product.imageUrl}
+              name={product.name}
+              ingredients={product.ingredients?.join(", ")}
+              description={product.description}
+              prices={product.prices}
+              loading={loading}
+              size={selectedSize}
+              setSize={setSelectedSize}
+            />
+          ) : (
+            <ChooseProductForm
+              className="relative top-8"
+              imageUrl={product?.imageUrl}
+              name={product?.name}
+              description={product?.description}
+              prices={product?.prices ?? []}
+              loading={loading}
+            />
+          )}
         </div>
       </Container>
     </>

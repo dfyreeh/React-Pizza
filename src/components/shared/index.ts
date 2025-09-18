@@ -12,3 +12,6 @@ export { ProductCard } from "./Product-card";
 export { ProductsGroupList } from "./Products-group-list";
 export { SearchInput } from "./Search-input";
 export { ProductImage } from "./Product-image"
+export { GroupVariants } from "./Group-variants"
+export { ChoosePizzaForm } from "./Choose-pizza-form"
+export { ChooseProductForm } from "./Choose-product-form"
