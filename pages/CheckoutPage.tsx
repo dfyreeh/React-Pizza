@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { CartItem } from "@/components/shared/CartItem";
 import { Container, Header, Title } from "../src/components/shared/index";
-import { Input } from "@/components/ui";
+import { Input, Button } from "@/components/ui";
 
 interface CartItem {
   id: number;
@@ -30,16 +30,15 @@ export const OrderProcessing: React.FC = () => {
   const handleDelete = (id: number) => {
     setCart(prev => prev.filter(item => item.id !== id));
   }
-
-  // const total = cart.reduce((sum, item) => sum + item.price * item.count, 0);
-  // const tax = 240;
-  // const delivery = 120;
+  const allPrice = cart.reduce((sum, item) => sum + item.price * item.count, 0);
+  const delivery = 120;
+  const totalPayment = cart.reduce((sum, item) => allPrice + delivery, 0);
 
  return ( 
   <>
   <Header />
     <Container>
-      <div className=" min-h-screen mt-10 flex justify-between gap-6">
+      <div className=" min-h-screen mt-10 flex justify-between gap-6 items-start">
         <div className="flex-1 space-y-8">
           <Title text="Оформлення заказу" className="font-black" size="lg"/>
 
@@ -59,7 +58,6 @@ export const OrderProcessing: React.FC = () => {
                   onDelete={() => handleDelete(item.id)}
                 />
               ))}
-             
             </div>
           </section>
 
@@ -73,7 +71,6 @@ export const OrderProcessing: React.FC = () => {
                 <Input className="w-full" placeholder="Email"/>
                 <Input className="w-full " placeholder="Телефон"/>
               </div>
-              
             </div>
           </section>
 
@@ -84,17 +81,34 @@ export const OrderProcessing: React.FC = () => {
               <Input className="w-full mt-10" placeholder="Введи адресу"/>
               <Input className="h-[150px] rounded-xl mt-5 border p-2 w-full resize-none  align-top" placeholder="Коментар до заказу..." />
             </div>
-           
-          
           </section>
         </div>
 
-        {/* Підсумок */}
-        {/* <CartSummary total={total} tax={tax} delivery={delivery} /> */}
+       {/* Підсумок й оплата*/}
+        <div className="w-[360px] p-6 shadow-sm rounded-2xl space-y-4 bg-white h-fit sticky top-20">
+          <Title text="Оплата" className="font-bold border-b" size="sm" />
+           <div className="text-sm text-gray-600 space-y-2">
+            <div className="flex justify-between">
+              <span>Стоимость товаров</span>
+              <span>{allPrice} грн</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Доставка</span>
+              <span>{delivery} грн</span>
+            </div>
+            <div className="flex justify-between mt-5">
+              <Title text="Загальна сума" className="font-bold" size="xs" />
+              <span>{totalPayment} грн</span>
+            </div>
+           </div>
+           <Input className="rounded-xl -mt-1.5 border  w-full resize-none" placeholder="Введи промокод" />
+           <Button className="flex items-center justify-center w-full">Усього {totalPayment} грн</Button>
+        </div>
       </div>
-    </Container></>
-  );
-};
+    </Container>
+  </>
+  )
+}
 
 
 
