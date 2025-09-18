@@ -46,7 +46,7 @@ export const OrderProcessing: React.FC = () => {
 
           {/* Корзина */}
           <section>
-            <div className="rounded-2xl bg-white shadow-sm p-6 w-2xl">
+            <div className="rounded-3xl bg-white shadow-sm p-6 w-2xl">
               <Title text="1. Корзина" className="font-bold pb-5  border-b my-2" size="sm" />
 
               {cart.map(item => (
@@ -66,7 +66,7 @@ export const OrderProcessing: React.FC = () => {
 
           {/* 2. Персональна інфа */}
           <section>
-            <div className="rounded-2xl  bg-white  shadow-sm p-6 w-2xl">
+            <div className="rounded-3xl  bg-white  shadow-sm p-6 w-2xl">
               <Title text="2. Персональна інформація" className="font-bold pb-5 border-b" size="sm" />
               <div className="grid grid-cols-2 gap-4 mt-10">
                 <Input className="w-full " placeholder="Ім'я"/>
@@ -79,7 +79,7 @@ export const OrderProcessing: React.FC = () => {
 
           {/* 3. Адреса доставки */}
           <section>
-            <div className="rounded-2xl  bg-white shadow-sm p-6 w-2xl ">
+            <div className="rounded-3xl  bg-white shadow-sm p-6 w-2xl ">
               <Title text="3. Адреса доставки" className="font-bold pb-5 border-b" size="sm" />
               <Input className="w-full mt-10" placeholder="Введи адресу"/>
               <div className="h-16">
@@ -91,26 +91,26 @@ export const OrderProcessing: React.FC = () => {
         </div>
 
        {/* Підсумок й оплата*/}
-        <div className="w-[360px] p-6 shadow-sm rounded-2xl space-y-4 bg-white h-fit sticky top-20">
-          <Title text="Оплата" className="font-bold pb-5 border-b" size="sm" />
-           <div className="text-sm text-gray-600 space-y-2">
+        <div className="w-[360px] p-6 shadow-sm rounded-3xl  space-y-4 bg-white h-fit sticky top-20">
+          <div>
+            <p >Підсумок:</p>
+            <Title className="font-extrabold border-b pb-4 " size="lg" text={`${totalPayment} ₴`}/>
+          </div>
+        
+           <div className="text-sm flex flex-col gap-1 text-gray-600 space-y-2">
             <div className="flex justify-between">
               <span>Стоимость товаров</span>
               {/* <span className="border-1 border-dashed border-gray-500  "></span> */}
 
-              <span>{allPrice} грн</span>
+              <span className="font-bold text-black">{allPrice} ₴</span>
             </div>
             <div className="flex justify-between">
               <span>Доставка</span>
-              <span>{delivery} грн</span>
-            </div>
-            <div className="flex justify-between mt-5">
-              <Title text="Загальна сума" className="font-bold" size="xs" />
-              <span>{totalPayment} грн</span>
+              <span className="font-bold text-black">{delivery} ₴</span>
             </div>
            </div>
            <Input className="rounded-xl -mt-1.5 border  w-full resize-none" placeholder="Введи промокод" />
-           <Button className="flex items-center justify-center w-full">Усього {totalPayment} грн</Button>
+           <Button className="flex items-center h-[50px] font-bold justify-center w-full">Перейти до оплати</Button>
         </div>
       </div>
     </Container>
