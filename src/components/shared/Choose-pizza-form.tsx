@@ -43,13 +43,19 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 
   return (
     <div
-      className={cn("flex flex-1 ml-6 mr-6 bg-[#e0e0e0] rounded-3xl flex-col lg:flex-row", className)}
+      className={cn(
+        "flex flex-1 ml-6 mr-6 bg-[#e0e0e0] rounded-3xl flex-col lg:flex-row",
+        className
+      )}
     >
       <ProductImage imageUrl={imageUrl} size={size} />
 
       <div className="rounded-3xl w-full lg:w-[490px] h-[400px] bg-[#f7f6f5] p-7 flex flex-col gap-4 mt-6 lg:mt-0 lg:ml-6">
         <Title text={name} size="md" className="font-extrabold mb-1" />
-        <p className="text-gray-400">{ingredients}</p>
+        <div>
+          <span className=" font-extrabold">Інгредієнти:</span>
+          <p className="text-gray-400">{ingredients}</p>
+        </div>
 
         <GroupVariants
           Value={String(size)}
