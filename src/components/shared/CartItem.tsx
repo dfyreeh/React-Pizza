@@ -1,5 +1,6 @@
+import { Plus } from "lucide-react";
 import React from "react";
-import { Trash } from "lucide-react";
+
 
 interface CartItemProps{
   name: string;
@@ -28,7 +29,7 @@ export const CartItem: React.FC<CartItemProps> = ({
                 <button onClick={onDecrement} className="px-2.5 py-0.5 cursor-pointer text-orange-500 bg-gray-100 rounded-2xl">-</button>
                 <span>{count}</span>
                 <button onClick={onIncrement} className="px-2.5 py-0.5 cursor-pointer text-orange-500 bg-gray-100 rounded-2xl">+</button>
-                <Trash data-slot="button" onClick={onDelete} className="py-0.5 cursor-pointer"/> 
+                <Plus data-slot="button" onClick={onDelete} className="rotate-45  text-gray-500 hover:text-black transition-colors duration-200 py-0.5 cursor-pointer"/> 
             </div>
         </div>
     )
