@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
@@ -37,6 +36,8 @@ function Button({
   variant,
   size,
   asChild = false,
+  loading = false, // добавляем дефолт false
+  children,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
@@ -48,9 +49,19 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(
+        buttonVariants({ variant, size, className }),
+        loading ? "cursor-wait opacity-70" : ""
+      )}
+      disabled={loading || props.disabled} // блокируем при loading
       {...props}
-    />
+    >
+      {loading ? (
+        <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+      ) : (
+        children
+      )}
+    </Comp>
   );
 }
 

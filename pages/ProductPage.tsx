@@ -40,38 +40,15 @@ export const ProductPage: React.FC = () => {
           return;
         }
 
-        let prices: { label: string; value: string | number }[] = [];
+        let prices: { label: string; value: number }[] = [];
         if (Array.isArray(found.price)) {
           found.price.forEach((pObj: any) => {
-            Object.keys(pObj).forEach((key) =>
-              prices.push({ label: key, value: pObj[key] })
-            );
+            Object.keys(pObj).forEach(key => {
+              prices.push({ label: key, value: Number(pObj[key]) });
+            });
           });
         } else {
-          prices.push({ label: "Ціна", value: found.price });
-        }
-
-        let measurements: { label: string; value: string }[] = [];
-        const isDrink = ["coffee", "water", "cocktails"].includes(
-          found.category
-        );
-
-        if (isDrink) {
-          if (found.volume && typeof found.volume === "object") {
-            Object.keys(found.volume).forEach((key) =>
-              measurements.push({ label: key, value: found.volume[key] })
-            );
-          } else if (found.volume) {
-            measurements.push({ label: "Об’єм", value: found.volume });
-          }
-        } else {
-          if (found.weight && typeof found.weight === "object") {
-            Object.keys(found.weight).forEach((key) =>
-              measurements.push({ label: key, value: found.weight[key] })
-            );
-          } else if (found.weight) {
-            measurements.push({ label: "Вага", value: found.weight });
-          }
+          prices.push({ label: "25", value: Number(found.price) });
         }
 
         setProduct({
@@ -81,11 +58,11 @@ export const ProductPage: React.FC = () => {
           imageUrl: found.imageUrl,
           prices,
           ingredients: found.ingredients || [],
-          measurements,
+          measurements: found.measurements || [],
           category: found.category,
         });
       } catch (error) {
-        console.error("Помилка при завантаженні продукту:", error);
+        console.error(error);
         navigate("/not-found", { replace: true });
       } finally {
         setLoading(false);
@@ -95,16 +72,16 @@ export const ProductPage: React.FC = () => {
     loadProduct();
   }, [id, navigate]);
 
-  const isPizzaForm = Boolean(product?.category === "pizza");
+  const isPizza = product?.category === "pizza";
 
   return (
     <>
       <Header />
       <Container>
         <div className="flex justify-center flex-1">
-          {isPizzaForm && product ? (
+          {isPizza && product ? (
             <ChoosePizzaForm
-              className="mt-11"
+              id={product.id} // правильно передаем id
               imageUrl={product.imageUrl}
               name={product.name}
               ingredients={product.ingredients?.join(", ")}
@@ -121,7 +98,6 @@ export const ProductPage: React.FC = () => {
               name={product?.name}
               description={product?.description}
               prices={product?.prices ?? []}
-              loading={loading}
             />
           )}
         </div>

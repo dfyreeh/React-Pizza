@@ -44,7 +44,7 @@ export const OrderProcessing: React.FC = () => {
         <div className="flex-1 space-y-8">
           <Title text="Оформлення заказу" className="font-black" size="lg"/>
 
-          {/* Корзина */}
+          {/* Кошик */}
           <section>
             <div className="rounded-2xl bg-white shadow-sm p-6 w-2xl">
               <Title text="1. Корзина" className="font-bold pb-5  border-b my-2" size="sm" />
@@ -52,7 +52,6 @@ export const OrderProcessing: React.FC = () => {
               {cart.map(item => (
                 <CartItem
                   key={item.id}
-                  // imageUrl="https://res.cloudinary.com/dj5m03zpw/image/upload/v1757435733/%D0%9A%D1%80%D0%B5%D0%B2%D0%B5%D1%82%D0%BA%D0%B8_eery8m.png"
                   name={item.name}
                   price={item.price}
                   count={item.count}

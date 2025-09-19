@@ -20,17 +20,16 @@ export const ProductsGroupList: React.FC<Props> = ({
   listClassName,
   categoryId,
   className,
-  scrollContainerRef,
 }) => {
   const setActiveCategoryId = useCategoryStore((state) => state.setActiveId);
 
   const intersectionRef = useRef<HTMLDivElement>(null!);
 
-const intersection = useIntersection(intersectionRef, {
-  root: null, // viewport
-  rootMargin: "0px 0px -50% 0px", // срабатывает, когда элемент пересекает верхнюю половину экрана
-  threshold: [0, 0.1, 0.25, 0.5, 0.75, 1], // срабатывает на любом пересечении
-});
+  const intersection = useIntersection(intersectionRef, {
+    root: null,
+    rootMargin: "0px 0px -50% 0px",
+    threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+  });
 
   useEffect(() => {
     if (intersection?.isIntersecting) {
@@ -64,7 +63,7 @@ const intersection = useIntersection(intersectionRef, {
             imageUrl={product.imageUrl}
             price={
               Array.isArray(product.price)
-                ? (Object.values(product.price[0])[0] as number) // <-- только число
+                ? (Object.values(product.price[0])[0] as number)
                 : (product.price as number)
             }
           />

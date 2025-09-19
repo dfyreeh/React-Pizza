@@ -4,30 +4,36 @@ import { ProductImage } from "./Product-image";
 import { Title } from "./Title";
 import { Button } from "../ui";
 import { GroupVariants } from "./Group-variants";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../../store/cartSlice";
+import toast from "react-hot-toast";
+
+type PizzaSize = 25 | 30 | 35;
 
 interface Props {
+  id: number;
   imageUrl: string | undefined;
   name: string | undefined;
   ingredients: string | undefined;
   prices: { label: string; value: string | number }[];
-  size: PizzaSize; // размер пиццы
-  setSize: (size: PizzaSize) => void;
   description: string | undefined;
   loading?: boolean;
   className?: string;
+  size?: PizzaSize;
+  setSize?: React.Dispatch<React.SetStateAction<PizzaSize>>;
 }
-
-type PizzaSize = 25 | 30 | 35;
 
 export const ChoosePizzaForm: React.FC<Props> = ({
   name,
   imageUrl,
+  id,
   ingredients,
   prices,
   loading,
   description,
   className,
 }) => {
+  const dispatch = useDispatch();
   const [size, setSize] = React.useState<PizzaSize>(25);
 
   const priceMap: Record<PizzaSize, number> = React.useMemo(() => {
@@ -40,6 +46,32 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   }, [prices]);
 
   const totalPrice = priceMap[size] ?? 0;
+  const [isAdding, setIsAdding] = React.useState(false);
+
+  const handleAddToCart = () => {
+    if (!id || !name) return;
+
+    setIsAdding(true);
+
+    const uniqueId = id * 1000 + size;
+
+    const itemToAdd = {
+      id: uniqueId,
+      productId: id,
+      size,
+      name: `${name} ${size} см`,
+      price: totalPrice,
+      imageUrl: imageUrl ?? "",
+      quantity: 1,
+    };
+
+    dispatch(addItem(itemToAdd));
+
+    setTimeout(() => {
+      setIsAdding(false);
+      toast.success(`${name} (${size} см) додано до кошику!`);
+    }, 500);
+  };
 
   return (
     <div
@@ -72,7 +104,8 @@ export const ChoosePizzaForm: React.FC<Props> = ({
         </div>
 
         <Button
-          loading={loading}
+          onClick={handleAddToCart}
+          loading={isAdding}
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-auto"
         >
           Додати до кошику {totalPrice} ₴

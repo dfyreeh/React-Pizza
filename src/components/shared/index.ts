@@ -15,3 +15,7 @@ export { ProductImage } from "./Product-image"
 export { GroupVariants } from "./Group-variants"
 export { ChoosePizzaForm } from "./Choose-pizza-form"
 export { ChooseProductForm } from "./Choose-product-form"
+export { CartButton } from "./Cart-button"
+export { CartDrawer } from "./Cart-drawer"
+export { CartDrawerItem } from "./Cart-drawer-item"
+
