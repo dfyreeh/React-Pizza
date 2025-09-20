@@ -56,7 +56,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
 
       <SheetContent className="flex flex-col h-full bg-gray-100">
         <SheetHeader>
-          <SheetHeader >
+          <SheetHeader>
             <SheetTitle>
               {cartItems.length > 0 ? (
                 <>
@@ -75,18 +75,11 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
               animationData={animationData}
               loop
               autoplay
-              style={{ width: 250, height: 250 }}
+              style={{ width: 300, height: 300 }}
             />
-            
           </div>
         ) : (
           <>
-            {/* <SheetHeader>
-              <SheetTitle>
-                У кошику{" "}
-                <span className="font-bold">{cartItems.length} товарів</span>
-              </SheetTitle>
-            </SheetHeader> */}
             <div className="flex-1 flex flex-col gap-2 overflow-y-auto px-2 cart-scroll max-h-[62vh] pb-2 pr-2">
               {cartItems.map((item) => (
                 <CartDrawerItem
