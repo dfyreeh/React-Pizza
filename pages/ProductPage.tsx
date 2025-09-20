@@ -43,7 +43,7 @@ export const ProductPage: React.FC = () => {
         let prices: { label: string; value: number }[] = [];
         if (Array.isArray(found.price)) {
           found.price.forEach((pObj: any) => {
-            Object.keys(pObj).forEach(key => {
+            Object.keys(pObj).forEach((key) => {
               prices.push({ label: key, value: Number(pObj[key]) });
             });
           });
@@ -93,6 +93,7 @@ export const ProductPage: React.FC = () => {
             />
           ) : (
             <ChooseProductForm
+              id={product?.id}
               className="relative top-8"
               imageUrl={product?.imageUrl}
               name={product?.name}

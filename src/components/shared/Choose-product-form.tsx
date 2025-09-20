@@ -17,6 +17,7 @@ interface Props {
   prices: Price[];
   description: string | undefined;
   className?: string;
+  id: number | undefined;
 }
 
 export const ChooseProductForm: React.FC<Props> = ({
@@ -24,6 +25,7 @@ export const ChooseProductForm: React.FC<Props> = ({
   imageUrl,
   prices,
   description,
+  id,
   className,
 }) => {
   const dispatch = useDispatch();
@@ -37,7 +39,7 @@ export const ChooseProductForm: React.FC<Props> = ({
     setIsAdding(true);
 
     const itemToAdd = {
-      id: Date.now(),
+      id: Number(id),
       name,
       price: Number(totalPrice),
       imageUrl: imageUrl ?? "",

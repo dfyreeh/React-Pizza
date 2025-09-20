@@ -4,7 +4,7 @@ import { Title } from "./Title";
 import { Minus, Plus } from "lucide-react";
 
 interface Props {
-  id: number;
+  id: number ;
   size?: number;
   name: string;
   description?: string;
