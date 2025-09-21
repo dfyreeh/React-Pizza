@@ -14,6 +14,11 @@ import {
   clearCart,
 } from "../store/cartSlice";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
+import * as Yup from "yup";
+import { userValidationSchema } from "../validation/validationSchema";
+import type { UserFormValues } from "../validation/validationSchema";
 
 interface CartItem {
   id: number;
@@ -56,6 +61,87 @@ export const OrderProcessing: React.FC = () => {
 
   const delivery = 120;
 
+  // Відправка замовлення в Telegram
+
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [comment, setComment] = React.useState("");
+
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleSubmitOrder = async () => {
+    setIsLoading(true);
+    try {
+      const items = cartItems.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      }));
+
+      const orderData = {
+        firstName,
+        lastName,
+        email,
+        phone,
+        address,
+        comment,
+        items,
+        totalPrice: totalPrice + delivery,
+      };
+
+      const res = await fetch("http://localhost:3001/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData),
+      });
+
+      if (res.ok) {
+        await res.json();
+        toast.success("Ваше замовлення прийнято!");
+        dispatch(clearCart());
+        navigate("/");
+      } else {
+        toast.error("Помилка при відправці замовлення.");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Не вдалося підключитися до сервера");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Валідація
+  const values = { firstName, lastName, phone, address };
+
+  const [errors, setErrors] = React.useState<Partial<UserFormValues>>({});
+  const [touched, setTouched] = React.useState<
+    Partial<Record<keyof UserFormValues, boolean>>
+  >({});
+
+  React.useEffect(() => {
+    const validate = async () => {
+      try {
+        await userValidationSchema.validate(values, { abortEarly: false });
+        setErrors({});
+      } catch (err: any) {
+        const newErrors: { [key: string]: string } = {};
+        err.inner.forEach((e: any) => {
+          if (e.path) newErrors[e.path] = e.message;
+        });
+        setErrors(newErrors);
+      }
+    };
+    validate();
+  }, [firstName, lastName, phone, address]);
+  const isFormValid =
+    Object.keys(errors).length === 0 &&
+    Object.keys(touched).length === Object.keys(values).length;
+
   return (
     <div className="bg-[#F4F1EE]">
       <Header className="bg-[#F4F1EE]" />
@@ -82,6 +168,7 @@ export const OrderProcessing: React.FC = () => {
                       e.preventDefault();
                       dispatch(clearCart());
                       navigate("/");
+                      toast.success("Кошик очищений!");
                     }}
                     className="flex items-center gap-1 text-gray-500 cursor-pointer group hover:text-primary"
                   >
@@ -125,12 +212,79 @@ export const OrderProcessing: React.FC = () => {
                   className="font-bold pb-5 border-b"
                   size="sm"
                 />
-                <div className="grid grid-cols-2 gap-4 mt-10">
-                  <Input className="w-full " placeholder="Ім'я" />
-                  <Input className="w-full " placeholder="Прізвище" />
-                  <Input className="w-full" placeholder="Email" />
-                  <Input className="w-full " placeholder="Телефон" />
-                </div>
+                <form className="grid grid-cols-2 gap-4 gap-y-9 mt-10">
+                  <div className="relative">
+                    {errors.firstName && touched.firstName && (
+                      <label className="text-red-500 text-sm absolute -top-6">
+                        {errors.firstName}
+                      </label>
+                    )}
+                    <Input
+                      className={`w-full ${
+                        errors.firstName && touched.firstName
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
+                      placeholder="Ім'я"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      onBlur={() =>
+                        setTouched((prev) => ({ ...prev, firstName: true }))
+                      }
+                    />
+                  </div>
+
+                  <div className="relative">
+                    {errors.lastName && touched.lastName && (
+                      <label className="text-red-500 text-sm absolute -top-6">
+                        {errors.lastName}
+                      </label>
+                    )}
+                    <Input
+                      className={`w-full ${
+                        errors.lastName && touched.lastName
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
+                      placeholder="Прізвище"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      onBlur={() =>
+                        setTouched((prev) => ({ ...prev, lastName: true }))
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <Input
+                      className="w-full"
+                      placeholder="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="relative">
+                    {errors.phone && touched.phone && (
+                      <label className="text-red-500 text-sm absolute -top-6">
+                        {errors.phone}
+                      </label>
+                    )}
+                    <Input
+                      className={`w-full ${
+                        errors.phone && touched.phone
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
+                      placeholder="Телефон"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      onBlur={() =>
+                        setTouched((prev) => ({ ...prev, phone: true }))
+                      }
+                    />
+                  </div>
+                </form>
               </div>
             </section>
 
@@ -142,11 +296,33 @@ export const OrderProcessing: React.FC = () => {
                   className="font-bold pb-5 border-b"
                   size="sm"
                 />
-                <Input className="w-full mt-10" placeholder="Введи адресу" />
+                <div className="relative mt-8">
+                  {errors.address && touched.address && (
+                    <label className="text-red-500 text-sm absolute -top-6">
+                      {errors.address}
+                    </label>
+                  )}
+                  <Input
+                    className={`w-full ${
+                      errors.address && touched.address
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                    placeholder="Введи адресу"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    onBlur={() =>
+                      setTouched((prev) => ({ ...prev, address: true }))
+                    }
+                  />
+                </div>
+
                 <div className="h-16">
                   <Textarea
                     className="h-full rounded-xl mt-5 border p-2 w-full resize-none  align-top"
                     placeholder="Коментар до замовлення..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
                   />
                 </div>
               </div>
@@ -189,7 +365,12 @@ export const OrderProcessing: React.FC = () => {
               className="rounded-xl mt-1.5 border  w-full resize-none"
               placeholder="Введи промокод"
             />
-            <Button className="flex items-center h-[50px] font-bold justify-center w-full">
+            <Button
+              className="flex items-center h-[50px] font-bold justify-center w-full"
+              onClick={handleSubmitOrder}
+              disabled={!isFormValid}
+              loading={isLoading}
+            >
               Замовити
             </Button>
           </div>

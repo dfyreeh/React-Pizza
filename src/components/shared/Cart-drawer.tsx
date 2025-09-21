@@ -80,7 +80,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
           </div>
         ) : (
           <>
-            <div className="flex-1 flex flex-col gap-2 overflow-y-auto px-2 cart-scroll max-h-[62vh] pb-2 pr-2">
+            <div className="flex-1 flex flex-col gap-2 overflow-y-auto px-2 cart-scroll max-h-full pb-2 pr-2">
               {cartItems.map((item) => (
                 <CartDrawerItem
                   key={`${item.id}-${item.size}`}
