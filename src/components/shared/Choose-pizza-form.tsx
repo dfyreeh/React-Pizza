@@ -23,6 +23,7 @@ interface Props {
   setSize?: React.Dispatch<React.SetStateAction<PizzaSize>>;
 }
 
+
 export const ChoosePizzaForm: React.FC<Props> = ({
   name,
   imageUrl,
@@ -73,6 +74,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
     }, 500);
   };
 
+
   return (
     <div
       className={cn(
@@ -80,37 +82,43 @@ export const ChoosePizzaForm: React.FC<Props> = ({
         className
       )}
     >
-      <ProductImage imageUrl={imageUrl} size={size} />
+      {loading ? (
+        <div>fgfgfg</div>
+      ) : (
+        <>
+          <ProductImage imageUrl={imageUrl} size={size} />
 
-      <div className="rounded-3xl w-full lg:w-[490px] h-[400px] bg-[#f7f6f5] p-7 flex flex-col gap-4 mt-6 lg:mt-0 lg:ml-6">
-        <Title text={name} size="md" className="font-extrabold mb-1" />
-        <div>
-          <span className=" font-extrabold">Інгредієнти:</span>
-          <p className="text-gray-400">{ingredients}</p>
-        </div>
+          <div className="rounded-3xl w-full lg:w-[490px] h-[400px] bg-[#f7f6f5] p-7 flex flex-col gap-4 mt-6 lg:mt-0 lg:ml-6">
+            <Title text={name} size="md" className="font-extrabold mb-1" />
+            <div>
+              <span className=" font-extrabold">Інгредієнти:</span>
+              <p className="text-gray-400">{ingredients}</p>
+            </div>
 
-        <GroupVariants
-          Value={String(size)}
-          onClick={(value) => setSize(Number(value) as PizzaSize)}
-          items={[
-            { name: "Маленька", value: "25" },
-            { name: "Середня", value: "30" },
-            { name: "Велика", value: "35" },
-          ]}
-        />
+            <GroupVariants
+              Value={String(size)}
+              onClick={(value) => setSize(Number(value) as PizzaSize)}
+              items={[
+                { name: "Маленька", value: "25" },
+                { name: "Середня", value: "30" },
+                { name: "Велика", value: "35" },
+              ]}
+            />
 
-        <div>
-          <p>{description}</p>
-        </div>
+            <div>
+              <p>{description}</p>
+            </div>
 
-        <Button
-          onClick={handleAddToCart}
-          loading={isAdding}
-          className="h-[55px] px-10 text-base rounded-[18px] w-full mt-auto"
-        >
-          Додати до кошику {totalPrice} ₴
-        </Button>
-      </div>
+            <Button
+              onClick={handleAddToCart}
+              loading={isAdding}
+              className="h-[55px] px-10 text-base rounded-[18px] w-full mt-auto"
+            >
+              Додати до кошику {totalPrice} ₴
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

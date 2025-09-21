@@ -8,6 +8,8 @@ import {
 import { Header } from "@/components/shared/Header";
 import { fetchGoods } from "../services/axios";
 import React from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { CardContent } from "@/components/ui/card";
 
 interface Product {
   id: string;
@@ -44,6 +46,8 @@ export default function Hom() {
     loadGoods();
   }, []);
 
+  const limit = 9;
+
   return (
     <>
       <Header />
@@ -63,7 +67,24 @@ export default function Hom() {
         <div className="flex-1">
           <div className="flex flex-col gap-16">
             {loading ? (
-              <p>Завантаження товарів...</p>
+              <div className="mt-10 grid gap-8 grid-cols-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                {Array(limit)
+                  .fill(0)
+                  .map((_, index) => (
+                    <div key={index} className=" w-[290px]  flex  gap-6 ">
+                      <CardContent className="px-1 flex items-center w-full flex-col gap-3">
+                        <Skeleton className="w-[215px] h-[215px] rounded-full  " />
+                        <Skeleton className="h-6 w-full rounded" />
+                        <Skeleton className="h-4 w-full rounded" />
+                        <Skeleton className="h-4 w-full rounded" />
+                        <div className="flex items-center justify-between gap-30 pt-2">
+                          <Skeleton className="h-6 w-16 rounded" />
+                          <Skeleton className="h-8 w-24 rounded-2xl" />
+                        </div>
+                      </CardContent>
+                    </div>
+                  ))}
+              </div>
             ) : (
               goods.map((category) => (
                 <ProductsGroupList

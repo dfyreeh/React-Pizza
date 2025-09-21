@@ -6,6 +6,7 @@ import {
   ChooseProductForm,
   Container,
   Header,
+  ProductPageSkeleton,
 } from "../src/components/shared/index";
 
 type PizzaSize = 25 | 30 | 35;
@@ -79,15 +80,16 @@ export const ProductPage: React.FC = () => {
       <Header />
       <Container>
         <div className="flex justify-center flex-1">
-          {isPizza && product ? (
+          {loading ? (
+            <ProductPageSkeleton className="w-full" /> 
+          ) : isPizza && product ? (
             <ChoosePizzaForm
-              id={product.id} // правильно передаем id
+              id={product.id}
               imageUrl={product.imageUrl}
               name={product.name}
               ingredients={product.ingredients?.join(", ")}
               description={product.description}
               prices={product.prices}
-              loading={loading}
               size={selectedSize}
               setSize={setSelectedSize}
             />
