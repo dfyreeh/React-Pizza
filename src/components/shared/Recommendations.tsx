@@ -21,8 +21,8 @@ export const Recommendations: React.FC<Props> = ({ products }) => {
   
   return (
     <div className="mt-12 w-full">
-      <Title text="Рекомендації" className="font-bold" size="sm" />
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <Title text="Рекомендації" className="font-bold" size="md" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product) => {
           const minPrice = product.prices.length > 0
             ? Math.min(...product.prices.map((p) => Number(p.value)))
