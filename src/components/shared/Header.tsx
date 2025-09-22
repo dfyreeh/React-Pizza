@@ -40,7 +40,7 @@ export const Header: React.FC<Props> = ({ className }) => {
             <User size={16} />
             Вхід
           </Button>
-          <CartButton />.
+          <CartButton />
         </div>
       </Container>
     </header>

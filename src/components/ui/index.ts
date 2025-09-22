@@ -6,3 +6,4 @@ export { Label } from "./label";
 export { Popover } from "./popover";
 export { Skeleton } from "./skeleton";
 export { Slider } from "./slider";
+export { Carousel } from "./carousel";

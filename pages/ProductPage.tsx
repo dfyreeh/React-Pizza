@@ -81,7 +81,7 @@ export const ProductPage: React.FC = () => {
       <Container>
         <div className="flex justify-center flex-1">
           {loading ? (
-            <ProductPageSkeleton className="w-full" /> 
+            <ProductPageSkeleton className="w-full" />
           ) : isPizza && product ? (
             <ChoosePizzaForm
               id={product.id}

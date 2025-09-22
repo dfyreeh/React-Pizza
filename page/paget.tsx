@@ -1,4 +1,5 @@
 import {
+  CarouselNews,
   Container,
   Filters,
   ProductsGroupList,
@@ -10,6 +11,7 @@ import { fetchGoods } from "../services/axios";
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CardContent } from "@/components/ui/card";
+import ImgSkeleton from "../src/assets/ImgSkeleton.png";
 
 interface Product {
   id: string;
@@ -54,7 +56,10 @@ export default function Hom() {
       <Container className="mt-5">
         <Title size="xl" text="Усі товари" className="font-extrabold " />
       </Container>
+      
+
       <TopBar className="mb-6" />
+      <CarouselNews />
       <Container className="flex pb-14">
         {/* Фільтрація */}
         <div className="flex gap-[60px] mr-12">
@@ -73,7 +78,13 @@ export default function Hom() {
                   .map((_, index) => (
                     <div key={index} className=" w-[290px]  flex  gap-6 ">
                       <CardContent className="px-1 flex items-center w-full flex-col gap-3">
-                        <Skeleton className="w-[215px] h-[215px] rounded-full  " />
+                        {/* <Skeleton className="w-[215px] h-[215px] rounded-full  " /> */}
+
+                        <img
+                          className="   w-[215px] h-[215px]"
+                          src={ImgSkeleton}
+                        />
+
                         <Skeleton className="h-6 w-full rounded" />
                         <Skeleton className="h-4 w-full rounded" />
                         <Skeleton className="h-4 w-full rounded" />
