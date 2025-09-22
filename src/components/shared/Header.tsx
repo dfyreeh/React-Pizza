@@ -33,13 +33,16 @@ export const Header: React.FC<Props> = ({ className }) => {
 
         {/* Права частина */}
         <div className="flex items-center gap-3">
-          <Button
-            variant="outline"
-            className="flex items-center gap-1  hover:bg-orange-500 hover:text-white "
-          >
-            <User size={16} />
-            Вхід
-          </Button>
+          <Link to="/login">
+            <Button
+              variant="outline"
+              className="flex items-center gap-1  hover:bg-orange-500 hover:text-white "
+            >
+              <User size={16} />
+              Вхід
+            </Button>
+          </Link>
+
           <CartButton />
         </div>
       </Container>

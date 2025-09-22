@@ -56,7 +56,6 @@ export default function Hom() {
       <Container className="mt-5">
         <Title size="xl" text="Усі товари" className="font-extrabold " />
       </Container>
-      
 
       <TopBar className="mb-6" />
       <CarouselNews />
