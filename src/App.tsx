@@ -6,6 +6,7 @@ import { ProductPage } from "../pages/ProductPage";
 import { OrderProcessing } from "../pages/CheckoutPage";
 import { Toaster } from "react-hot-toast";
 
+
 function App() {
   return (
     <>
@@ -21,3 +22,5 @@ function App() {
 }
 
 export default App;
+
+

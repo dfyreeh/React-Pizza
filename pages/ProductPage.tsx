@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchGoods } from "../services/axios";
-import { Recommendations } from "@/components/shared/Recommendations"; 
+import { Recommendations } from "@/components/shared/Recommendations";
+
 import {
   ChoosePizzaForm,
   ChooseProductForm,
@@ -9,6 +10,7 @@ import {
   Header,
   ProductPageSkeleton,
 } from "../src/components/shared/index";
+import { RecommendationsSkeleton } from "@/components/shared/Recommendations-Skeleton";
 
 type PizzaSize = 25 | 30 | 35;
 
@@ -17,11 +19,20 @@ interface Product {
   name: string;
   description: string;
   imageUrl: string;
-  prices: { label: string; value: string | number }[];  
+  prices: { label: string; value: string | number }[];
   ingredients?: string[];
   measurements?: { label: string; value: string }[];
   category: string;
 }
+
+const CATEGORY_RECOMMENDATIONS_MAP: Record<string, string[]> = {
+  "Піци": ["Соуси", "Напої"],
+  "Кава": ["Десерти", "Десерти"],
+  "Десерти": ["Кава", "Напої"],
+  "Напої": ["Закуски", "Десерти", "Піци"],
+  "Закуски": ["Соуси", "Напої"],
+  "Соуси": ["Піци", "Закуски"],
+};
 
 const getRecommendations = (
   allProducts: Product[],
@@ -29,17 +40,41 @@ const getRecommendations = (
 ): Product[] => {
   if (!currentProduct) return [];
 
-  return allProducts
-    .filter(
-      (p) =>
-        p.id !== currentProduct.id &&
-        (p.category === currentProduct.category ||
-          currentProduct.ingredients?.some((ing) =>
-            p.ingredients?.includes(ing)
-          ))
-    )
-    .slice(0, 4);
-}
+  const relatedCategoryNames = CATEGORY_RECOMMENDATIONS_MAP[currentProduct.category] || [];
+
+  const groupedByCategory: Record<string, Product[]> = {};
+
+  // Розділити продукти по категоріям
+  for (const product of allProducts) {
+    if (
+      product.id !== currentProduct.id &&
+      relatedCategoryNames.includes(product.category)
+    ) {
+      if (!groupedByCategory[product.category]) {
+        groupedByCategory[product.category] = [];
+      }
+
+      groupedByCategory[product.category].push(product);
+    }
+  }
+  const recommendations: Product[] = [];
+
+  for (const category of relatedCategoryNames) {
+    const items = groupedByCategory[category];
+
+    if (items && items.length > 0) {
+      const shuffled = items.sort(() => 0.5 - Math.random());
+      for (let i = 0; i < Math.min(2, shuffled.length); i++) {
+        if (recommendations.length < 4) {
+          recommendations.push(shuffled[i]);
+        }
+      }
+    }
+    if (recommendations.length >= 4) break;
+  }
+  return recommendations;
+};
+
 
 export const ProductPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -57,10 +92,10 @@ export const ProductPage: React.FC = () => {
 
         const parsedProducts: Product[] = data.flatMap((cat: any) =>
           cat.products.map((p: any) => ({
-            id: p.id,
+            id: Number(p.id),
             name: p.name,
             description: p.description,
-            imageUrl: p.imageUrl,
+            imageUrl: p.imageUrl || p.img,
             prices: Array.isArray(p.price)
               ? p.price.map((pObj: any) => {
                   const key = Object.keys(pObj)[0];
@@ -69,10 +104,11 @@ export const ProductPage: React.FC = () => {
               : [{ label: "25", value: Number(p.price) }],
             ingredients: p.ingredients || [],
             measurements: p.measurements || [],
-            category: p.category,
+            category: cat.name, 
           }))
-        )
+        );
         setAllProducts(parsedProducts);
+
         const found = parsedProducts.find((p) => p.id === Number(id));
         if (!found) {
           navigate("/not-found", { replace: true });
@@ -90,7 +126,8 @@ export const ProductPage: React.FC = () => {
     loadProduct();
   }, [id, navigate]);
 
-  const isPizza = product?.category === "pizza";
+  const isPizza = product?.category === "Піци"; 
+
   return (
     <>
       <Header />
@@ -105,7 +142,7 @@ export const ProductPage: React.FC = () => {
               name={product.name}
               ingredients={product.ingredients?.join(", ")}
               description={product.description}
-              prices={product.prices} 
+              prices={product.prices}
               size={selectedSize}
               setSize={setSelectedSize}
             />
@@ -116,18 +153,19 @@ export const ProductPage: React.FC = () => {
               imageUrl={product?.imageUrl}
               name={product?.name}
               description={product?.description}
-              prices={product?.prices ?? []}  
+              prices={product?.prices ?? []}
             />
           )}
         </div>
 
-        {/* рекомендації */}
-        {!loading && recommendations.length > 0 && (
-          <div>
-            <Recommendations products={recommendations} />
-          </div>
-        )}
+        <div className="mt-10 mb-15">
+        {loading ? (
+          <RecommendationsSkeleton className="w-full" />
+        ) : recommendations.length > 0 ? (
+          <Recommendations products={recommendations} />
+        ) : null}
+      </div>
       </Container>
     </>
-  )
-}
+  );
+};
