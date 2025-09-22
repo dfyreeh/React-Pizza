@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchGoods } from "../services/axios";
+import { Recommendations } from "@/components/shared/Recommendations"; 
 import {
   ChoosePizzaForm,
   ChooseProductForm,
@@ -16,10 +17,28 @@ interface Product {
   name: string;
   description: string;
   imageUrl: string;
-  prices: { label: string; value: string | number }[];
+  prices: { label: string; value: string | number }[];  
   ingredients?: string[];
   measurements?: { label: string; value: string }[];
   category: string;
+}
+
+const getRecommendations = (
+  allProducts: Product[],
+  currentProduct: Product
+): Product[] => {
+  if (!currentProduct) return [];
+
+  return allProducts
+    .filter(
+      (p) =>
+        p.id !== currentProduct.id &&
+        (p.category === currentProduct.category ||
+          currentProduct.ingredients?.some((ing) =>
+            p.ingredients?.includes(ing)
+          ))
+    )
+    .slice(0, 4);
 }
 
 export const ProductPage: React.FC = () => {
@@ -28,40 +47,39 @@ export const ProductPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState<PizzaSize>(25);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [recommendations, setRecommendations] = useState<Product[]>([]);
 
   useEffect(() => {
     const loadProduct = async () => {
       try {
         const data = await fetchGoods();
-        const allProducts = data.flatMap((cat: any) => cat.products);
-        const found = allProducts.find((p: any) => p.id === Number(id));
 
+        const parsedProducts: Product[] = data.flatMap((cat: any) =>
+          cat.products.map((p: any) => ({
+            id: p.id,
+            name: p.name,
+            description: p.description,
+            imageUrl: p.imageUrl,
+            prices: Array.isArray(p.price)
+              ? p.price.map((pObj: any) => {
+                  const key = Object.keys(pObj)[0];
+                  return { label: key, value: Number(pObj[key]) };
+                })
+              : [{ label: "25", value: Number(p.price) }],
+            ingredients: p.ingredients || [],
+            measurements: p.measurements || [],
+            category: p.category,
+          }))
+        )
+        setAllProducts(parsedProducts);
+        const found = parsedProducts.find((p) => p.id === Number(id));
         if (!found) {
           navigate("/not-found", { replace: true });
           return;
         }
-
-        let prices: { label: string; value: number }[] = [];
-        if (Array.isArray(found.price)) {
-          found.price.forEach((pObj: any) => {
-            Object.keys(pObj).forEach((key) => {
-              prices.push({ label: key, value: Number(pObj[key]) });
-            });
-          });
-        } else {
-          prices.push({ label: "25", value: Number(found.price) });
-        }
-
-        setProduct({
-          id: found.id,
-          name: found.name,
-          description: found.description,
-          imageUrl: found.imageUrl,
-          prices,
-          ingredients: found.ingredients || [],
-          measurements: found.measurements || [],
-          category: found.category,
-        });
+        setProduct(found);
+        setRecommendations(getRecommendations(parsedProducts, found));
       } catch (error) {
         console.error(error);
         navigate("/not-found", { replace: true });
@@ -69,12 +87,10 @@ export const ProductPage: React.FC = () => {
         setLoading(false);
       }
     };
-
     loadProduct();
   }, [id, navigate]);
 
   const isPizza = product?.category === "pizza";
-
   return (
     <>
       <Header />
@@ -89,7 +105,7 @@ export const ProductPage: React.FC = () => {
               name={product.name}
               ingredients={product.ingredients?.join(", ")}
               description={product.description}
-              prices={product.prices}
+              prices={product.prices} 
               size={selectedSize}
               setSize={setSelectedSize}
             />
@@ -100,11 +116,18 @@ export const ProductPage: React.FC = () => {
               imageUrl={product?.imageUrl}
               name={product?.name}
               description={product?.description}
-              prices={product?.prices ?? []}
+              prices={product?.prices ?? []}  
             />
           )}
         </div>
+
+        {/* рекомендації */}
+        {!loading && recommendations.length > 0 && (
+          <div>
+            <Recommendations products={recommendations} />
+          </div>
+        )}
       </Container>
     </>
-  );
-};
+  )
+}
