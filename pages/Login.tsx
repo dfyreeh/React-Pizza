@@ -5,13 +5,72 @@ import TextField from "@mui/material/TextField";
 import { Button } from "../src/components/ui/index";
 import Logo from "../src/assets/LogoLogin.png";
 import { Link } from "react-router-dom";
-
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../src/firebase/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../store/userSlice";
+import { doc, getDoc } from "firebase/firestore";
+import toast from "react-hot-toast";
 interface Props {
   className?: string;
 }
 
 export const Login: React.FC<Props> = ({ className }) => {
-  const [phone, setPhone] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [loading, setLoading] = React.useState(false); 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogin = async () => {
+    setLoading(true); 
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const firebaseUser = userCredential.user;
+
+      // Отримуємо дані користувача з Firestore
+      const userDocRef = doc(db, "users", firebaseUser.uid);
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
+        dispatch(
+          setUser({
+            uid: firebaseUser.uid,
+            email: firebaseUser.email ?? "",
+            name: userData.name ?? "",
+            surname: userData.surname ?? "",
+            phoneNumber: userData.phoneNumber ?? "",
+          })
+        );
+        toast.success("Ви ввійшли до облікового запису!");
+        navigate("/profile"); 
+      } else {
+        dispatch(
+          setUser({
+            uid: firebaseUser.uid,
+            email: firebaseUser.email ?? "",
+            name: "",
+            surname: "",
+            phoneNumber: "",
+          })
+        );
+       
+        navigate("/profile/edit");
+      }
+    } catch (error: any) {
+      console.error("Помилка входу:", error.message);
+      toast.error("Не вдалося увійти. Перевірте email та пароль.");
+    } finally {
+      setLoading(false); 
+    }
+  };
+
   return (
     <Container
       className={cn("flex items-center justify-center h-[100vh] ", className)}
@@ -47,26 +106,54 @@ export const Login: React.FC<Props> = ({ className }) => {
             },
           }}
           id="outlined-basic"
-          label="Номер телефону"
-          defaultValue="+38"
+          label="Email"
           variant="outlined"
-          onChange={(e) => setPhone(e.target.value)}
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
-        <Button className="w-[360px] h-[54px]">НАСТУПНИЙ</Button>
+        <TextField
+          className="w-[360px] h-[54px] rounded-2xl hover:border-primary"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "16px",
 
-        <Link
-          to="/"
-          className="w-[360px] h-[54px] flex items-center justify-center gap-3
-           text-[oklch(0.705_0.213_47.604)] transition-all rounded-2xl  hover:bg-[#ff6a001a]"
+              "&:hover fieldset": {
+                borderColor: "oklch(0.705 0.213 47.604)",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "oklch(0.705 0.213 47.604)",
+                color: "oklch(0.705 0.213 47.604)",
+              },
+            },
+            "&:hover .MuiInputLabel-root": {
+              color: "oklch(0.705 0.213 47.604)",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: "oklch(0.705 0.213 47.604)",
+            },
+          }}
+          id="outlined-basic"
+          label="Пароль"
+          type="password"
+          value={password}
+          variant="outlined"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          className="w-[360px] h-[54px]"
+          onClick={handleLogin}
+          loading={loading}
         >
-          ПОВЕРНУТИСЯ
-        </Link>
+          ВХІД
+        </Button>
+
         <Link
           to="/loginVerify"
           className="w-[360px] h-[54px] flex items-center justify-center gap-3
            text-[oklch(0.705_0.213_47.604)] transition-all rounded-2xl  hover:bg-[#ff6a001a]"
         >
-          TEST
+          РЕГЕСТРАЦІЯ
         </Link>
       </div>
     </Container>

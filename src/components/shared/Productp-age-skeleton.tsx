@@ -5,7 +5,7 @@ interface Props {
   className?: string;
 }
 
-import ImgSkeleton from "../../assets/ImgSkeleton.png";
+import ImgSkeleton from "../../assets/imgSkeleton.png";
 
 export const ProductPageSkeleton: React.FC<Props> = ({ className }) => {
   return (

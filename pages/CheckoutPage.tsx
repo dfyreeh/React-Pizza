@@ -16,9 +16,10 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-import * as Yup from "yup";
 import { userValidationSchema } from "../validation/validationSchema";
 import type { UserFormValues } from "../validation/validationSchema";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase/firebase";
 
 interface CartItem {
   id: number;
@@ -36,6 +37,8 @@ export const OrderProcessing: React.FC = () => {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  const user = useSelector((state: RootState) => state.user);
 
   const handleIncrease = (id: number, size?: number) => {
     const item = cartItems.find((i) => i.id === id && i.size === size);
@@ -141,6 +144,32 @@ export const OrderProcessing: React.FC = () => {
   const isFormValid =
     Object.keys(errors).length === 0 &&
     Object.keys(touched).length === Object.keys(values).length;
+
+  React.useEffect(() => {
+    if (!user.uid) return;
+
+    const fetchUser = async () => {
+      const ref = doc(db, "users", user.uid!);
+      const snap = await getDoc(ref);
+
+      if (snap.exists()) {
+        const data = snap.data();
+        setFirstName(data.name || "");
+        setLastName(data.surname || "");
+        setEmail(data.email || "");
+        setPhone(data.phoneNumber || "");
+
+        setTouched({
+          firstName: true,
+          lastName: true,
+          phone: true,
+          address: false,  
+        });
+      }
+    };
+
+    fetchUser();
+  }, [user.uid]);
 
   return (
     <div className="bg-[#F4F1EE]">
