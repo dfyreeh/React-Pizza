@@ -144,7 +144,7 @@ export const EditProfile: React.FC<Props> = ({ className }) => {
               },
             }}
             id="outlined-basic"
-            label="І'мя"
+            label="Ім'я"
             type="text"
             value={name}
             variant="outlined"
