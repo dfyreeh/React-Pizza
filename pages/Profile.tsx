@@ -73,7 +73,7 @@ export const Profile: React.FC<Props> = ({ className }) => {
     await signOut(auth);
     dispatch(clearUser());
     toast.success("Ви вийшли з облікового запису!");
-    navigate("/login");
+    navigate("/");
   };
 
   return (
