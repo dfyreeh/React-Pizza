@@ -88,7 +88,7 @@ export const LoginVerify: React.FC<Props> = ({ className }) => {
           </div>
 
           <div className="w-[360px] text-center flex flex-col items-center">
-            <Title className="font-bold" text="Регестрація" size="lg" />
+            <Title className="font-bold" text="Реєстрація" size="lg" />
           </div>
 
           <TextField

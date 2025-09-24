@@ -1,5 +1,5 @@
 import {
-  CarouselNews,
+  // CarouselNews,
   Container,
   Filters,
   ProductsGroupList,
@@ -58,7 +58,7 @@ export default function Hom() {
       </Container>
 
       <TopBar className="mb-6" />
-      <CarouselNews />
+      {/* <CarouselNews /> */}
       <Container className="flex pb-14">
         {/* Фільтрація */}
         <div className="flex gap-[60px] mr-12">
