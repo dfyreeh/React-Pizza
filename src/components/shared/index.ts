@@ -11,3 +11,13 @@ export { CheckboxFiltersGroup } from "./Checkbox-filters-group";
 export { ProductCard } from "./Product-card";
 export { ProductsGroupList } from "./Products-group-list";
 export { SearchInput } from "./Search-input";
+export { ProductImage } from "./Product-image"
+export { GroupVariants } from "./Group-variants"
+export { ChoosePizzaForm } from "./Choose-pizza-form"
+export { ChooseProductForm } from "./Choose-product-form"
+export { CartButton } from "./Cart-button"
+export { CartDrawer } from "./Cart-drawer"
+export { CartDrawerItem } from "./Cart-drawer-item"
+export { ProductPageSkeleton } from "./Productp-age-skeleton"
+export { CarouselNews } from "./Carousel-news"
+
