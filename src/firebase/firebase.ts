@@ -1,14 +1,15 @@
+/// <reference types="vite/client" />
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBjP6m50hPUU4dPZkggq41e-AUjGfS_OLo",
-  authDomain: "pizza-9effc.firebaseapp.com",
-  projectId: "pizza-9effc",
-  storageBucket: "pizza-9effc.firebasestorage.app",
-  messagingSenderId: "290851243559",
-  appId: "1:290851243559:web:5449e2f76f1bd03136b002",
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);

@@ -57,8 +57,17 @@ export const EditProfile: React.FC<Props> = ({ className }) => {
   }, [user.uid, dispatch]);
 
   if (!user.uid)
-    return <div>Завантаження профілю або користувач не увійшов...</div>;
-  if (loading) return <div>Завантаження даних...</div>;
+    return (
+      <p className="w-full h-[100vh] flex items-center justify-center">
+        <span className="w-12 h-12 border-4 border-t-orange-500 border-r-orange-500 border-b-orange-500 border-l-transparent rounded-full animate-spin"></span>
+      </p>
+    );
+  if (loading)
+    return (
+      <p className="w-full h-[100vh] flex items-center justify-center">
+        <span className="w-12 h-12 border-4 border-t-orange-500 border-r-orange-500 border-b-orange-500 border-l-transparent rounded-full animate-spin"></span>
+      </p>
+    );
 
   const handleSave = async () => {
     if (!name.trim() || !surname.trim() || !phone.trim()) {
@@ -112,9 +121,9 @@ export const EditProfile: React.FC<Props> = ({ className }) => {
           <Title className="font-bold" text="Заповніть профіль" size="lg" />
         </div>
 
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col items-center gap-6">
           <TextField
-            className="w-[360px] h-[54px] rounded-2xl hover:border-primary"
+            className="w-[240px] sm:w-[280px] md:w-[360px] h-[50px] sm:h-[54px] rounded-2xl hover:border-primary"
             sx={{
               "& .MuiOutlinedInput-root": {
                 borderRadius: "16px",
@@ -142,7 +151,7 @@ export const EditProfile: React.FC<Props> = ({ className }) => {
             onChange={(e) => setName(e.target.value)}
           />
           <TextField
-            className="w-[360px] h-[54px] rounded-2xl hover:border-primary"
+            className="w-[240px] sm:w-[280px] md:w-[360px] h-[50px] sm:h-[54px] rounded-2xl hover:border-primary"
             sx={{
               "& .MuiOutlinedInput-root": {
                 borderRadius: "16px",
@@ -170,7 +179,7 @@ export const EditProfile: React.FC<Props> = ({ className }) => {
             onChange={(e) => setSurname(e.target.value)}
           />
           <TextField
-            className="w-[360px] h-[54px] rounded-2xl hover:border-primary"
+            className="w-[240px] sm:w-[280px] md:w-[360px] h-[50px] sm:h-[54px] rounded-2xl hover:border-primary"
             sx={{
               "& .MuiOutlinedInput-root": {
                 borderRadius: "16px",
@@ -199,7 +208,7 @@ export const EditProfile: React.FC<Props> = ({ className }) => {
           />
 
           <Button
-            className="w-[360px] h-[54px]"
+            className="w-[240px] sm:w-[280px] md:w-[360px] h-[50px] sm:h-[54px] rounded-2xl hover:border-primary"
             onClick={handleSave}
             disabled={saving}
             loading={saving}

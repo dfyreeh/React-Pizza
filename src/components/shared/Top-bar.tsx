@@ -45,6 +45,7 @@ export const TopBar: React.FC<Props> = ({ className }) => {
         <div
           className={cn(
             "absolute right-[32px] transition-transform duration-500 ease-in-out",
+            "hidden sm:flex", // спрятать на мобильных, показать с sm и выше
             isSticky ? "translate-x-0 opacity-100" : "translate-x-20 opacity-0"
           )}
         >

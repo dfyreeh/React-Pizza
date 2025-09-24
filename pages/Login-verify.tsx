@@ -77,7 +77,7 @@ export const LoginVerify: React.FC<Props> = ({ className }) => {
       className={cn("flex items-center justify-center h-[100vh] ", className)}
     >
       <div>
-        <div className="flex flex-col gap-[1.1rem]">
+        <div className="flex flex-col items-center gap-[1.1rem]">
           <div className="w-[360px] flex items-center justify-center">
             <Lottie
               animationData={monkey}
@@ -92,7 +92,7 @@ export const LoginVerify: React.FC<Props> = ({ className }) => {
           </div>
 
           <TextField
-            className="w-[360px] h-[54px] rounded-2xl hover:border-primary"
+            className="w-[240px] h-[54px] rounded-2xl hover:border-primary sm:w-[280px] md:w-[300px] lg:w-[360px]"
             sx={{
               "& .MuiOutlinedInput-root": {
                 borderRadius: "16px",
@@ -121,7 +121,7 @@ export const LoginVerify: React.FC<Props> = ({ className }) => {
           />
 
           <TextField
-            className="w-[360px] h-[54px] rounded-2xl hover:border-primary"
+            className="w-[240px] h-[54px] rounded-2xl hover:border-primary sm:w-[280px] md:w-[300px] lg:w-[360px]"
             sx={{
               "& .MuiOutlinedInput-root": {
                 borderRadius: "16px",
@@ -149,7 +149,7 @@ export const LoginVerify: React.FC<Props> = ({ className }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <TextField
-            className="w-[360px] h-[54px] rounded-2xl hover:border-primary"
+            className="w-[240px] h-[54px] rounded-2xl hover:border-primary sm:w-[280px] md:w-[300px] lg:w-[360px]"
             sx={{
               "& .MuiOutlinedInput-root": {
                 borderRadius: "16px",
@@ -177,7 +177,7 @@ export const LoginVerify: React.FC<Props> = ({ className }) => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           {errorMessage && <p className="text-red-500 w-[360px] text-center">{errorMessage}</p>}
-          <Button className="w-[360px] h-[54px]" onClick={handleRegister} loading={loading}>
+          <Button className="w-[240px] h-[54px] rounded-2xl hover:border-primary sm:w-[280px] md:w-[300px] lg:w-[360px]" onClick={handleRegister} loading={loading}>
             ЗАРЕЄСТРУВАТИСЯ
           </Button>
 

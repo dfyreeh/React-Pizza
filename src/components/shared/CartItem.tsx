@@ -22,43 +22,41 @@ export const CartItem: React.FC<CartItemProps> = ({
   onDelete,
 }) => {
   return (
-    <div className=" flex justify-between rounded-xl shadow-sm  p-3">
-      <div className="flex items-center justify-between  w-full">
-        <div className="flex items-center gap-2">
-          <img className="w-[40px] h-[40px]" src={imageUrl} alt={name} />
-          <p className="font-extrabold">{name}</p>
-        </div>
+    <div className="flex items-center justify-between rounded-xl shadow-sm p-3 w-full bg-white">
+  {/* Лівий блок: зображення та назва */}
+  <div className="flex items-center gap-3">
+    <img className="w-14 h-14 object-cover rounded" src={imageUrl} alt={name} />
+    <p className="font-bold text-base truncate">{name}</p>
+  </div>
 
-        <div className="flex items-center justify-between w-60">
-          <div>
-            <p className="font-extrabold">{price} ₴</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              onClick={onDecrement}
-              className="cursor-pointer text-2xl px-3 hover:bg-orange-500 hover:text-white"
-            >
-              -
-            </Button>
-            <span className="font-extrabold">{count}</span>
-            <Button
-              onClick={onIncrement}
-              variant="outline"
-              className="cursor-pointer text-2xl px-3 hover:bg-orange-500 hover:text-white"
-            >
-              +
-            </Button>
-          </div>
-        </div>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Plus
-          data-slot="button"
-          onClick={onDelete}
-          className="rotate-45  text-gray-500 hover:text-black transition-colors duration-200 py-0.5 cursor-pointer"
-        />
-      </div>
+  {/* Правий блок: ціна, кнопки та видалення */}
+  <div className="flex items-center gap-3">
+    <p className="font-bold text-base">{price} ₴</p>
+    
+    <div className="flex items-center gap-1">
+      <Button
+        variant="outline"
+        onClick={onDecrement}
+        className="text-xl px-2 hover:bg-orange-500 hover:text-white"
+      >
+        -
+      </Button>
+      <span className="font-bold">{count}</span>
+      <Button
+        variant="outline"
+        onClick={onIncrement}
+        className="text-xl px-2 hover:bg-orange-500 hover:text-white"
+      >
+        +
+      </Button>
     </div>
+
+    <Plus
+      onClick={onDelete}
+      className="rotate-45 text-gray-500 hover:text-red-500 transition-colors duration-200 cursor-pointer"
+      size={20}
+    />
+  </div>
+</div>
   );
 };

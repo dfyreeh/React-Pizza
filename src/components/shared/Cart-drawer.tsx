@@ -19,19 +19,16 @@ import animationData from "../../assets/animationBasket.json";
 
 interface Props {
   className?: string;
+  children?: React.ReactNode;
 }
 
-export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
-  children,
-}) => {
+export const CartDrawer: React.FC<Props> = ({ children }) => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
   const handleIncrease = (id: number, size?: number) => {
     const item = cartItems.find((i) => i.id === id && i.size === size);
-    if (item) {
-      dispatch(addItem({ ...item, quantity: 1 }));
-    }
+    if (item) dispatch(addItem({ ...item, quantity: 1 }));
   };
 
   const handleDecrease = (id: number, size?: number) => {
@@ -51,72 +48,72 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
   );
 
   return (
-    <Sheet>
-      <SheetTrigger asChild>{children}</SheetTrigger>
+  <Sheet>
+  <SheetTrigger asChild>{children}</SheetTrigger>
 
-      <SheetContent className="flex flex-col h-full bg-gray-100">
-        <SheetHeader>
-          <SheetHeader>
-            <SheetTitle>
-              {cartItems.length > 0 ? (
-                <>
-                  У кошику{" "}
-                  <span className="font-bold">{cartItems.length} товарів</span>
-                </>
-              ) : (
-                ""
-              )}
-            </SheetTitle>
-          </SheetHeader>
-        </SheetHeader>
-        {cartItems.length === 0 ? (
-          <div className="flex-1 flex items-center justify-center">
-            <Lottie
-              animationData={animationData}
-              loop
-              autoplay
-              style={{ width: 300, height: 300 }}
-            />
-          </div>
-        ) : (
+  <SheetContent
+    className="flex flex-col h-full bg-gray-100 w-full sm:w-[380px] sm:max-w-full"
+  >
+    <SheetHeader>
+      <SheetTitle>
+        {cartItems.length > 0 ? (
           <>
-            <div className="flex-1 flex flex-col gap-2 overflow-y-auto px-2 cart-scroll max-h-full pb-2 pr-2">
-              {cartItems.map((item) => (
-                <CartDrawerItem
-                  key={`${item.id}-${item.size}`}
-                  id={item.id}
-                  size={item.size}
-                  name={item.name}
-                  price={item.price}
-                  quantity={item.quantity}
-                  imageUrl={item.imageUrl}
-                  onIncrease={() => handleIncrease(item.id, item.size)}
-                  onDecrease={() => handleDecrease(item.id, item.size)}
-                />
-              ))}
+            У кошику <span className="font-bold">{cartItems.length} товарів</span>
+          </>
+        ) : (
+          ""
+        )}
+      </SheetTitle>
+    </SheetHeader>
+
+    {cartItems.length === 0 ? (
+      <div className="flex-1 flex items-center justify-center">
+        <Lottie
+          animationData={animationData}
+          loop
+          autoplay
+          style={{ width: 300, height: 300 }}
+        />
+      </div>
+    ) : (
+      <>
+        <div className="flex-1 flex flex-col gap-2 overflow-y-auto px-2 cart-scroll max-h-full pb-2 pr-2">
+          {cartItems.map((item) => (
+            <CartDrawerItem
+              key={`${item.id}-${item.size}`}
+              id={item.id}
+              size={item.size}
+              name={item.name}
+              price={item.price}
+              quantity={item.quantity}
+              imageUrl={item.imageUrl}
+              onIncrease={() => handleIncrease(item.id, item.size)}
+              onDecrease={() => handleDecrease(item.id, item.size)}
+            />
+          ))}
+        </div>
+
+        <SheetFooter className="bg-white p-8">
+          <div className="w-full">
+            <div className="flex mb-4">
+              <span className="flex flex-1 text-lg text-neutral-500">
+                Ітого
+                <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
+              </span>
+              <span className="font-bold text-lg">{totalPrice} ₴</span>
             </div>
 
-            <SheetFooter className="bg-white p-8">
-              <div className="w-full">
-                <div className="flex mb-4">
-                  <span className="flex flex-1 text-lg text-neutral-500">
-                    Ітого
-                    <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
-                  </span>
-                  <span className="font-bold text-lg">{totalPrice} ₴</span>
-                </div>
-
-                <Link to="/orderProcessing">
-                  <Button type="submit" className="w-full h-12 text-base">
-                    Оформити замовлення
-                    <ArrowRight className="w-5 ml-2" />
-                  </Button>
-                </Link>
-              </div>
-            </SheetFooter>
-          </>
-        )}
-      </SheetContent>
-    </Sheet>
+            <Link to="/orderProcessing">
+              <Button type="submit" className="w-full h-12 text-base">
+                Оформити замовлення
+                <ArrowRight className="w-5 ml-2" />
+              </Button>
+            </Link>
+          </div>
+        </SheetFooter>
+      </>
+    )}
+  </SheetContent>
+</Sheet>
   );
 };

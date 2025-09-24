@@ -163,7 +163,7 @@ export const OrderProcessing: React.FC = () => {
           firstName: true,
           lastName: true,
           phone: true,
-          address: false,  
+          address: false,
         });
       }
     };
@@ -180,17 +180,23 @@ export const OrderProcessing: React.FC = () => {
           className="font-black mt-5"
           size="lg"
         />
-        <div className=" min-h-screen mt-5 flex justify-between gap-6 items-start">
+        <div className="min-h-screen mt-5 flex flex-col lg:flex-row justify-between gap-6 items-start">
           <div className="flex-1 space-y-8">
             {/* Кошик */}
-            <section>
-              <div className=" rounded-3xl bg-white shadow-sm p-6 w-2xl">
-                <div className="flex items-center justify-between">
-                  <Title
-                    text="1. Кошик"
-                    className="font-bold   my-2"
-                    size="sm"
-                  />
+            <section className="w-full sm:w-full md:w-full lg:max-w-[672px] xl:max-w-[672px] 2xl:max-w-[672px] ">
+              <div
+                className="rounded-3xl bg-white shadow-sm p-6
+                  w-full
+                  max-w-full
+                  sm:max-w-md
+                  md:max-w-lg
+                  lg:max-w-2xl
+                  xl:max-w-3xl
+                  mx-auto h-auto"
+              >
+                {/* Заголовок та кнопка очищення */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
+                  <Title text="1. Кошик" className="font-bold my-2" size="sm" />
                   <Link
                     to="#"
                     onClick={(e) => {
@@ -209,17 +215,11 @@ export const OrderProcessing: React.FC = () => {
                   </Link>
                 </div>
 
-                <div
-                  className="
-                  cart-scroll 
-                  flex flex-col gap-2
-                  max-h-[62vh] pb-2 overflow-y-auto 
-                  pr-2  
-                "
-                >
+                {/* Список елементів корзини */}
+                <div className="cart-scroll flex flex-col gap-2 max-h-[62vh] overflow-y-auto pb-2 pr-2">
                   {cartItems.map((item) => (
                     <CartItem
-                      key={item.id}
+                      key={`${item.id}-${item.size}`}
                       imageUrl={item.imageUrl}
                       name={item.name}
                       price={item.price}
@@ -234,8 +234,17 @@ export const OrderProcessing: React.FC = () => {
             </section>
 
             {/* 2. Персональна інфа */}
-            <section>
-              <div className="rounded-3xl  bg-white  shadow-sm p-6 w-2xl">
+            <section className="w-full sm:w-full md:w-full lg:max-w-[672px] xl:max-w-[672px] 2xl:max-w-[672px]  ">
+              <div
+                className="rounded-3xl bg-white shadow-sm p-6
+                  w-full
+                  max-w-full
+                  sm:max-w-md
+                  md:max-w-lg
+                  lg:max-w-2xl
+                  xl:max-w-3xl
+                  mx-auto h-auto"
+              >
                 <Title
                   text="2. Персональна інформація"
                   className="font-bold pb-5 border-b"
@@ -318,8 +327,17 @@ export const OrderProcessing: React.FC = () => {
             </section>
 
             {/* 3. Адреса доставки */}
-            <section>
-              <div className="rounded-3xl  bg-white shadow-sm p-6 w-2xl ">
+            <section className="w-full sm:w-full md:w-full lg:max-w-[672px] xl:max-w-[672px] 2xl:max-w-[672px] ">
+              <div
+                className="rounded-3xl bg-white shadow-sm p-6
+                  w-full
+                  max-w-full
+                  sm:max-w-md
+                  md:max-w-lg
+                  lg:max-w-2xl
+                  xl:max-w-3xl
+                  mx-auto h-auto"
+              >
                 <Title
                   text="3. Адрес доставки"
                   className="font-bold pb-5 border-b"

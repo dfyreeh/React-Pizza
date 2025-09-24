@@ -62,7 +62,12 @@ export const Profile: React.FC<Props> = ({ className }) => {
     return () => unsubscribe();
   }, [dispatch]);
 
-  if (loadingUser) return <p>Завантаження...</p>;
+  if (loadingUser)
+    return (
+      <p className="w-full h-[100vh] flex items-center justify-center">
+        <span className="w-12 h-12 border-4 border-t-orange-500 border-r-orange-500 border-b-orange-500 border-l-transparent rounded-full animate-spin"></span>
+      </p>
+    );
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -73,25 +78,30 @@ export const Profile: React.FC<Props> = ({ className }) => {
 
   return (
     <Container className="flex justify-center h-[100vh] items-center">
-      <div className={cn("w-[40%] flex flex-col gap-3", className)}>
+      <div
+        className={cn(
+          "w-[90%] sm:w-[70%] md:w-[50%] lg:w-[40%] flex flex-col gap-2 sm:gap-3",
+          className
+        )}
+      >
         <div className="flex justify-center items-center mb-3">
           <Title className="font-bold" text="Профіль" size="xl" />
         </div>
 
         <div className="flex flex-col gap-3 ">
-          <div className="shadow-sm h-[60px] flex items-center pl-10 rounded-2xl text-lg">
+          <div className="shadow-sm h-[50px] sm:h-[55px] md:h-[60px] flex items-center pl-6 sm:pl-8 md:pl-10 rounded-2xl text-base sm:text-lg">
             <span className="mr-2 font-bold">Email:</span>
             {user.email || "-"}
           </div>
-          <div className="shadow-sm h-[60px] flex items-center pl-10 rounded-2xl text-lg">
+          <div className="shadow-sm h-[50px] sm:h-[55px] md:h-[60px] flex items-center pl-6 sm:pl-8 md:pl-10 rounded-2xl text-base sm:text-lg">
             <span className="mr-2 font-bold">Ім'я:</span>
             {user.name || "-"}
           </div>
-          <div className="shadow-sm h-[60px] flex items-center pl-10 rounded-2xl text-lg">
+          <div className="shadow-sm h-[50px] sm:h-[55px] md:h-[60px] flex items-center pl-6 sm:pl-8 md:pl-10 rounded-2xl text-base sm:text-lg">
             <span className="mr-2 font-bold">Прізвище:</span>
             {user.surname || "-"}
           </div>
-          <div className="shadow-sm h-[60px] flex items-center pl-10 rounded-2xl text-lg">
+          <div className="shadow-sm h-[50px] sm:h-[55px] md:h-[60px] flex items-center pl-6 sm:pl-8 md:pl-10 rounded-2xl text-base sm:text-lg">
             <span className="mr-2 font-bold">Телефон:</span>
             {user.phoneNumber || "-"}
           </div>
